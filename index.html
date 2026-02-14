@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nasif 💌</title>
+
+<style>
+body{
+  margin:0;
+  font-family:'Georgia', serif;
+  background:#ffe6f0;
+  overflow:hidden;
+  text-align:center;
+}
+
+/* Tap screen */
+#startScreen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  background:#ffb6c1;
+  cursor:pointer;
+}
+#startScreen h1{
+  font-size:28px;
+  color:white;
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+  0%{opacity:0.5;}
+  50%{opacity:1;}
+  100%{opacity:0.5;}
+}
+
+/* Letter box */
+#letterBox{
+  display:none;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  width:85%;
+  max-width:500px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  text-align:center;
+}
+#message{
+  font-size:18px;
+  color:#444;
+  min-height:140px;
+  line-height:1.6;
+}
+
+/* Buttons */
+button{
+  margin:10px;
+  padding:12px 25px;
+  font-size:16px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+}
+#yesBtn{ background:#ff4d88; color:white; }
+#noBtn{ background:black; color:white; position:absolute; }
+
+/* Celebration screen */
+#celebrate{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#ff4d88;
+  color:white;
+  font-size:32px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+
+/* Floating hearts */
+.heart{
+  position:absolute;
+  color:#ff4d88;
+  font-size:22px;
+  animation:float 6s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(100vh);}
+  100%{transform:translateY(-10vh);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Tap screen -->
+<div id="startScreen" onclick="openLetter()">
+  <h1>💌 Nasif, tap to open your letter</h1>
+</div>
+
+<!-- Love letter -->
+<div id="letterBox">
+  <h2>My Dearest Nasif ❤️</h2>
+  <p id="message"></p>
+  <button id="yesBtn" onclick="celebrateYes()">Yes ❤️</button>
+  <button id="noBtn" onmouseover="moveNo()">No 😢</button>
+</div>
+
+<!-- Celebration -->
+<div id="celebrate">
+  🎉 He Said YES! 🎉
+  <p style="font-size:18px;">Forever yours — Borson ❤️</p>
+</div>
+
+<!-- Music (replace with your music link) -->
+<audio id="bgMusic" loop>
+  <source src="PASTE-YOUR-MUSIC-LINK.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const text = `Thank you for coming into my life.
+I love you and I wanna love you until my last breath.
+I wanna have 6 babies and 6 kittens with you,
+and I wanna grow old with you.
+Will you be my lover for the rest of my life?`;
+
+let i=0;
+
+function openLetter(){
+  document.getElementById("startScreen").style.display="none";
+  document.getElementById("letterBox").style.display="block";
+  document.getElementById("bgMusic").play();
+  typeWriter();
+}
+
+function typeWriter(){
+  if(i<text.length){
+    document.getElementById("message").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter,40);
+  }
+}
+
+function moveNo(){
+  const btn=document.getElementById("noBtn");
+  btn.style.top=Math.random()*80+"vh";
+  btn.style.left=Math.random()*80+"vw";
+}
+
+function celebrateYes(){
+  document.getElementById("letterBox").style.display="none";
+  document.getElementById("celebrate").style.display="flex";
+
+  // Floating hearts
+  setInterval(()=>{
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+  },200);
+}
+</script>
+
+</body>
+</html>
